@@ -1,53 +1,62 @@
-﻿
-
-@model IEnumerable<Item>
-
+﻿@model IEnumerable<Item>
 
 @{
     ViewData["Title"] = "Index";
 }
- 
-<h1>Items Views...</h1>   
 
+<h1>Items Views...</h1>
 
-<table class="table table-hover">
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Items view</h2>
+        </div>
+        <div class="col-6 text-end">
+            <!-- Buraya istersen buton ekleyebilirsin -->  
 
-    <thead> 
-         
-        <tr> 
-            <th scope="col" >
-                Item Name 
-            </th>
+            <a asp-controller="Items" asp-action="New" class="btn  btn-primary">
+                <i class="bi bi-plus"></i>  &nbsp;  Add New Item
 
+            </a>
+        </div>
+    </div>
 
-            <th scope="col" >
-               Item Price 
-            </th>
-        </tr>
-    
-    
-    </thead>   
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Item Name</th>
+                <th scope="col">Item Price</th> 
+                <th scope="col">
 
-
-    <tbody> 
-        @foreach (var item in Model )
-        {
-
-            <tr class="table-primary" >
-
-                <td scope="row"  width="50%">
-                    @item.Name
-                </td>
-
-                <td width="30%">
-                    @item.price
-                </td>
+                </th> 
             </tr>
-            
+        </thead>
 
-        }
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="table-primary">
+                    <td scope="row" width="50%">
+                        @item.Name
+                    </td>
+                    <td width="30%">
+                        @item.price
+                    </td> 
+                    <td> 
+  <a asp-controller="" asp-action="" class="btn btn-sm  btn-success">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
 
-    </tbody>
+                &nbsp; 
 
-</table>
+                        <a asp-controller="" asp-action="" class="btn  btn-sm btn-danger">
+                            <i class="bi bi-trash3"></i>   
+                        </a> 
 
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

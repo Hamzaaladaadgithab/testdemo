@@ -25,6 +25,15 @@ namespace testdemo.Controllers
             IEnumerable<Item> İtemsList = _db.Items.ToList();
 
             return View(İtemsList);
-        }
+        }    
+
+
+        public IActionResult New()
+        {
+
+
+            return View(); 
+            
+            }
     }
 }
