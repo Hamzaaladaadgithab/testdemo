@@ -4,29 +4,36 @@
     ViewData["Title"] = "New";
 }
 
-<form method="post" asp-action="Create" asp-controller="Items">
+<form method="post">
     <div class="border p-3 mt-4">
 
         <div class="row pb-2">
             <h2 class="text-primary">Add New Item</h2>
             <hr />
-        </div>
+        </div>  
+
+        <div asp-validation-summary="All"></div>
 
         <div class="mb-3">
             <label asp-for="Name" class="form-label"></label>
-            <input asp-for="Name" class="form-control" />
-            <span asp-validation-for="Name" class="text-danger"></span>
+            <input asp-for="Name" class="form-control" /> 
+            <span asp  asp-validation-for="Name"  class=" text-danger" ></span>
         </div>
 
         <div class="mb-3">
             <label asp-for="price" class="form-label"></label>
-            <input asp-for="price" class="form-control" />
-            <span asp-validation-for="price" class="text-danger"></span>
+            <input asp-for="price" class="form-control" />  
+            <span asp-validation-for="price" class="text-danger"></span>    
         </div>
 
         <button type="submit" class="btn btn-primary" style="width: 150px">Save</button>
         <a asp-action="Index" asp-controller="Items" class="btn btn-secondary" style="width:150px">
-            Back to Items
+            back to Items
         </a>
     </div>
-</form>
+</form>   
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
