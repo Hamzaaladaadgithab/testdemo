@@ -23,8 +23,11 @@ namespace testdemo.Models
 
         public string price { get; set; }
 
-        public  DateTime  CreateDate { get; set; } = DateTime.Now;  
+        public  DateTime  CreateDate { get; set; } = DateTime.Now;
 
+        [Required]
+        [DisplayName("Category")]    
+        public int CategoryId { get; set; }    
 
     }
 }

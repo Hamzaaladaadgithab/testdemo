@@ -26,7 +26,21 @@
             <label asp-for="price" class="form-label"></label>
             <input asp-for="price"  disabled class="form-control" />
           
-        </div>
+        </div>   
+
+
+        <div> 
+            <label asp-for="CategoryId"></label> 
+            <select asp-for="CategoryId" disabled class="form-control">
+
+                <option value="0"> Select Category </option>
+                <option value="1"> Comuters </option>
+                <option value="2"> Mobiles </option>
+                <option value="3"> Electric machines</option> 
+
+            </select>
+        </div> 
+
 
         <button type="submit" class="btn btn-primary" style="width: 150px">Delete</button>
         <a asp-action="Index" asp-controller="Items" class="btn btn-secondary" style="width:150px">

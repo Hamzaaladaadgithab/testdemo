@@ -24,6 +24,14 @@
             <label asp-for="price" class="form-label"></label>
             <input asp-for="price" class="form-control" />  
             <span asp-validation-for="price" class="text-danger"></span>    
+        </div> 
+
+        <div> 
+            <label asp-for="CategoryId"></label> 
+            <select asp-for="CategoryId" class="form-control" asp-items="@ViewBag.CategoryList">
+			</select> 
+
+            <span asp-validation-for="CategoryId" class="text-danger"></span> 
         </div>
 
         <button type="submit" class="btn btn-primary" style="width: 150px">Save</button>

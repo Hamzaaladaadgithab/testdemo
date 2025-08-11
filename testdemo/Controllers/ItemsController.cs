@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using testdemo.Data;
 using testdemo.Models;
 
@@ -12,13 +13,9 @@ namespace testdemo.Controllers
             _db = db;
         }   
 
-
-
         private readonly AppDbContext _db; 
         
         
-      
-
         public IActionResult Index()
         {   
 
@@ -29,10 +26,12 @@ namespace testdemo.Controllers
 
         // GET : Items/New
         public IActionResult New()
-        {
-            return View(); 
-            
-            }
+            {   
+            // Yeni bir Item oluştur ve View'a gönder
+            createSelectList();
+            return View();
+        }
+        
 
         // POST : Items/New
         [HttpPost] 
@@ -46,11 +45,11 @@ namespace testdemo.Controllers
 
             if (ModelState.IsValid)
             {
-                // ModelState kontrol
-
                 _db.Items.Add(item);
-                // Eğer model geçerliyse veritabanına ekle
+               
                 _db.SaveChanges();
+                TempData["success"] = "Item created successfully";
+
                 // Veritabanına kaydettikten sonra, kullanıcıyı listeleme sayfasına yönlendir
                 return RedirectToAction("Index");
             }
@@ -61,7 +60,22 @@ namespace testdemo.Controllers
             }
         }
 
+        public void createSelectList(int selectId =0)
+        {
+            List<Category> categorys = new List<Category>
+            {
+                new Category { Id = 0, Name = "Select Category" },
+                new Category { Id = 1, Name = "Comuters" },
+                new Category { Id = 3, Name = "Mobiles" },
+                new Category { Id = 2, Name = "Electric machines" },
 
+            }; 
+
+            SelectList selectList = new SelectList(categorys, "Id", "Name", selectId);
+
+            ViewBag.CategoryList = selectList;
+
+        }
 
         // GET : Items/New
         public IActionResult Edit(int? Id){ 
@@ -100,8 +114,9 @@ namespace testdemo.Controllers
                 // ModelState kontrol
 
                 _db.Items.Update(item);
-                // Eğer model geçerliyse veritabanına ekle
-                _db.SaveChanges();
+               
+                _db.SaveChanges(); 
+                TempData["success"] = "Item added successfully";  
                 // Veritabanına kaydettikten sonra, kullanıcıyı listeleme sayfasına yönlendir
                 return RedirectToAction("Index");
             }
@@ -150,8 +165,9 @@ namespace testdemo.Controllers
                 _db.Items.Remove(item);
                 
                 _db.SaveChanges();
-                // Veritabanına kaydettikten sonra, kullanıcıyı listeleme sayfasına yönlendir
-                return RedirectToAction("Index");
+                TempData["success"] = "Item deleted successfully";  
+            // Veritabanına kaydettikten sonra, kullanıcıyı listeleme sayfasına yönlendir
+            return RedirectToAction("Index");
            
         }
 
