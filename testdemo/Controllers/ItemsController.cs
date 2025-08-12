@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using testdemo.Data;
 using testdemo.Models;
 
@@ -19,7 +20,7 @@ namespace testdemo.Controllers
         public IActionResult Index()
         {   
 
-            IEnumerable<Item> İtemsList = _db.Items.ToList();
+            IEnumerable<Item> İtemsList = _db.Items.Include(c => c.Category).ToList();
 
             return View(İtemsList);
         }
@@ -62,18 +63,25 @@ namespace testdemo.Controllers
 
         public void createSelectList(int selectId =0)
         {
-            List<Category> categorys = new List<Category>
-            {
-                new Category { Id = 0, Name = "Select Category" },
-                new Category { Id = 1, Name = "Comuters" },
-                new Category { Id = 3, Name = "Mobiles" },
-                new Category { Id = 2, Name = "Electric machines" },
+            //List<Category> categorys = new List<Category>
+            //{
+            //    new Category(){ Id = 0, Name = "Select Category" },
+            //    new Category(){ Id = 1, Name = "Comuters" },
+            //    new Category(){ Id = 2, Name = "Mobiles" },
+            //    new Category(){ Id = 3, Name = "Electric machines" },
 
-            }; 
+            //};  
+     
+            
+            List<Category> categorys= _db.Categorys.ToList();
+            
+            // SelectList, Category listesini Id ve Name alanlarına göre oluşturur
+            // ve seçili olan öğeyi belirlemek için selectId parametresini kullanır
+            // Bu, Category listesini dropdown veya select elementinde kullanmak için uygundur
 
-            SelectList selectList = new SelectList(categorys, "Id", "Name", selectId);
+            SelectList ListItems = new SelectList(categorys, "Id", "Name", selectId);
 
-            ViewBag.CategoryList = selectList;
+            ViewBag.CategoryList = ListItems;
 
         }
 
@@ -92,6 +100,7 @@ namespace testdemo.Controllers
                 return NotFound();
 
             }
+            createSelectList(item.CategoryId);
 
             return View(item);
 
@@ -145,6 +154,7 @@ namespace testdemo.Controllers
                 return NotFound();
 
             }
+            createSelectList(item.CategoryId);
 
             return View(item);
 

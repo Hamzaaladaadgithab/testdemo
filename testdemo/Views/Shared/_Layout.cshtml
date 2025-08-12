@@ -6,7 +6,9 @@
     <title>@ViewData["Title"] - Alışveriş listesi uygulaması</title>
     <link rel="stylesheet" href="~/css/bootswatchstyle.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/testdemo.styles.css" asp-append-version="true" />  
+    <link rel="stylesheet" href="~/testdemo.styles.css" asp-append-version="true" />   
+     
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 </head>
@@ -30,7 +32,10 @@
 
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Items" asp-action="Index">Items</a>
-                        </li>
+                        </li> 
+
+                        <li class="nav-item">
+							<a class="nav-link text-dark" asp-area="Employees" asp-controller="Home" asp-action="Index">Employees</a>
                  
                     </ul>
                 </div>
@@ -48,9 +53,12 @@
             &copy; 2025 - testdemo - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    <script src="~/js/site.js" asp-append-version="true"></script> 
+
+
+    @await RenderSectionAsync("Scripts", required: false) 
+
+
 </body>
 </html>

@@ -2,18 +2,16 @@
 
 @{
     ViewData["Title"] = "Index";
-}
+} 
+
+  
+
 
 <h1>Items Views...</h1>
 
 <div class="container p-3">
 
-    @if(TempData["success"] != null)
-    {
-        <h3 style="color:brown;">
-            @TempData["success"]
-        </h3>
-    }
+  <partial name ="_Notifications" /> 
 
 
 
@@ -35,7 +33,8 @@
         <thead>
             <tr>
                 <th scope="col">Item Name</th>
-                <th scope="col">Item Price</th> 
+                <th scope="col">Item Price</th>  
+                <th scope="col">Category</th>
                 <th scope="col">
 
                 </th> 
@@ -46,12 +45,15 @@
             @foreach (var item in Model)
             {
                 <tr class="table-primary">
-                    <td scope="row" width="50%">
+                    <td scope="row" width="30%">
                         @item.Name
                     </td>
-                    <td width="30%">
+                    <td width="20%">
                         @item.price
-                    </td> 
+                    </td>  
+                     <td width="30%">
+						@item.Category.Name
+                     </td>
                     <td> 
   <a asp-controller="Items" asp-action="Edit" asp-route-Id="@item.Id" class="btn btn-sm  btn-success">
                             <i class="bi bi-pencil-square"></i>
