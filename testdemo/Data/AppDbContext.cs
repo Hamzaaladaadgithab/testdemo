@@ -21,6 +21,10 @@ namespace testdemo.Data  // Proje adınla uyumlu olmalı
         
         public DbSet<Category> Categorys { get; set; }
 
+     
+
+        public DbSet<Employee> Employees { get; set; }  
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Correct usage: call Entity<Category>() and then HasData on the returned EntityTypeBuilder<Category>
