@@ -15,7 +15,10 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // Register the MainRepository as a transient service
 // This allows it to be injected into controllers or other services
-builder.Services.AddTransient(typeof(IRepository<>), typeof(MainRepository<>));
+//builder.Services.AddTransient(typeof(IRepository<>), typeof(MainRepository<>));
+
+builder.Services.AddTransient <IUintOfWork , UnitOfWork>();
+
 
 
 var app = builder.Build();

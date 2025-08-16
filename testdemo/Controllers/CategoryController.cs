@@ -7,12 +7,16 @@ namespace TestCoreApp.Controllers
 {
     public class CategoryController : Controller
     {
-        public CategoryController(IRepository<Category> repository)
+        public CategoryController(IUintOfWork _myUnit)
         {
-            _repository = repository;
+           //_repository = repository; 
+
+            myUnit = _myUnit;
         }
 
-        private IRepository<Category> _repository;
+        //private IRepository<Category> _repository;
+
+        private readonly IUintOfWork myUnit;
 
         //public IActionResult Index()
         //{
@@ -21,9 +25,9 @@ namespace TestCoreApp.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var oneCat = _repository.SelectOne(x => x.Name == "Computers");
+            var oneCat = myUnit.categoryes.SelectOne(x => x.Name == "Computers");
 
-            var allCat = await _repository.FindAllAsync("Items");
+            var allCat = await myUnit.categoryes.FindAllAsync("Items");
 
             return View(allCat);
         }
@@ -42,7 +46,7 @@ namespace TestCoreApp.Controllers
         {
             if (ModelState.IsValid)
             {   
-                _repository.AddOne(category);
+                myUnit.categoryes.AddOne(category);
 
                 return RedirectToAction("Index");
             }
@@ -62,7 +66,7 @@ namespace TestCoreApp.Controllers
                 return NotFound();
             }
 
-            var category = _repository.FindById(Id.Value);  
+            var category = myUnit.categoryes.FindById(Id.Value);  
 
             if (category== null) 
             {
@@ -81,7 +85,7 @@ namespace TestCoreApp.Controllers
             if (ModelState.IsValid)
             {  
 
-                _repository.UpdateOne(category);
+                myUnit.categoryes.UpdateOne(category);
 
                 return RedirectToAction("Index");
             }
@@ -100,7 +104,7 @@ namespace TestCoreApp.Controllers
                 return NotFound();
             }
 
-            var category = _repository.FindById(Id.Value);
+            var category = myUnit.categoryes.FindById(Id.Value);
 
             if (category == null)
             {
@@ -117,7 +121,7 @@ namespace TestCoreApp.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Delete(Category category)
         {    
-             _repository.DeleteOne(category);
+             myUnit.categoryes.DeleteOne(category);
 
 
             TempData["successData"] = "category has been deleted successfully";
