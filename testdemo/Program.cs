@@ -1,6 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-
 using testdemo.Data;
+using testdemo.Repository;
+using testdemo.Repository.Base;
+ 
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +12,10 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MyConnection")));
+
+// Register the MainRepository as a transient service
+// This allows it to be injected into controllers or other services
+builder.Services.AddTransient(typeof(IRepository<>), typeof(MainRepository<>));
 
 
 var app = builder.Build();
