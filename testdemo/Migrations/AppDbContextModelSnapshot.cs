@@ -34,6 +34,9 @@ namespace testdemo.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<byte[]>("dbImage")
+                        .HasColumnType("varbinary(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Categorys");
@@ -107,6 +110,9 @@ namespace testdemo.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("imagePath")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("price")

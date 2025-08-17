@@ -1,18 +1,24 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.Connections;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using testdemo.Models;
 using testdemo.Repository.Base;
+
 
 namespace TestCoreApp.Controllers
 {
     public class CategoryController : Controller
     {
-        public CategoryController(IUintOfWork _myUnit)
+        public CategoryController(IUintOfWork _myUnit )
         {
-           //_repository = repository; 
+           //_repository = repository;  
+            myUnit = _myUnit; 
 
-            myUnit = _myUnit;
+            
+
         }
+
+
 
         //private IRepository<Category> _repository;
 
@@ -45,7 +51,17 @@ namespace TestCoreApp.Controllers
         public IActionResult New(Category category)
         {
             if (ModelState.IsValid)
-            {   
+            {
+                if (category.clientFile != null)
+                {
+                    MemoryStream stream = new MemoryStream(); 
+                    category.clientFile.CopyTo(stream);
+                    category.dbImage = stream.ToArray(); // Resmi byte dizisine dönüştür                       
+
+
+                }
+
+
                 myUnit.categoryes.AddOne(category);
 
                 return RedirectToAction("Index");

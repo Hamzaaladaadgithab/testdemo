@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using testdemo.Data;
 using testdemo.Repository;
 using testdemo.Repository.Base;
+using Microsoft.AspNetCore.Identity;
  
 
 
@@ -10,12 +11,19 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// Identity için Context
+builder.Services.AddDbContext<testdemoContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("MyConnection")));
+
+// Normal veritabaný için Context
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MyConnection")));
 
-// Register the MainRepository as a transient service
-// This allows it to be injected into controllers or other services
-//builder.Services.AddTransient(typeof(IRepository<>), typeof(MainRepository<>));
+// Identity’yi testdemoContext ile baðla
+builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+        options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<testdemoContext>();
+
 
 builder.Services.AddTransient <IUintOfWork , UnitOfWork>();
 
@@ -46,5 +54,7 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.UseEndpoints( endpoint => endpoint.MapRazorPages()); 
 
 app.Run();

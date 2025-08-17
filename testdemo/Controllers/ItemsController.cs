@@ -3,16 +3,21 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using testdemo.Data;
 using testdemo.Models;
+using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
+
 
 namespace testdemo.Controllers
 {
     public class ItemsController : Controller
     {
 
-        public ItemsController(AppDbContext db)
-        {
-            _db = db;
+        public ItemsController(AppDbContext db , IHostingEnvironment host)
+        {    
+
+            _db = db; 
+            _host = host;   
         }   
+        private readonly IHostingEnvironment _host; 
 
         private readonly AppDbContext _db; 
         
@@ -42,10 +47,24 @@ namespace testdemo.Controllers
             if (item.Name== "100")
             {
                 ModelState.AddModelError("CustomError", "Name cannot be 100");
-            }
+            } 
 
             if (ModelState.IsValid)
             {
+                string fileName = string.Empty;
+
+                if (item.clientFile != null) {
+
+                    // Eğer clientFile null değilse, yani bir dosya yüklenmişse
+                    // Dosya adını oluştur ve item.imagePath'e ata
+                    string  myUploads = Path.Combine(_host.WebRootPath, "images"); 
+
+                    fileName = item.clientFile.FileName;
+                    string fullPath = Path.Combine(myUploads, fileName);
+                    item.clientFile.CopyTo(new FileStream(fullPath, FileMode.Create));  
+                    item.imagePath=fileName; // Yüklenen dosyanın adını item.imagePath'e ata
+
+                }
                 _db.Items.Add(item);
                
                 _db.SaveChanges();

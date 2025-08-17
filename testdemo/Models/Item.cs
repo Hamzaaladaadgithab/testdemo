@@ -32,15 +32,32 @@ namespace testdemo.Models
         // Bu, Item nesnesinin hangi kategoriye ait olduğunu belirtir
         // Bu ilişki, Entity Framework Core'un veritabanı ilişkilerini yönetmesine olanak tanır
         [ForeignKey("Category")]
-        public int CategoryId { get; set; }
+        public int CategoryId { get; set; } 
 
 
+
+
+         public string?  imagePath { get; set; } // Ürün resminin URL'si
+
+        [NotMapped] 
+
+        public IFormFile? clientFile { get; set; } // Ürün resmi için dosya yükleme desteği 
+
+        
         // Category.cs dosyasındaki Category sınıfına referans
         // Bu, Item sınıfının Category sınıfıyla ilişkili olduğunu gösterir
         // Bu ilişki sayesinde, bir Item nesnesi ile ilişkili Category bilgilerine erişebiliriz
         // Bu, Entity Framework Core'un ilişkileri yönetmesine olanak tanır
 
         public Category?  Category { get; set; } // Category.cs dosyasındaki Category sınıfına referans   
+
+
+
+                                                 
+
+
+
+
 
     }
 }
