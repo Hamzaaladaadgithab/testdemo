@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using testdemo.Models;
 
 namespace testdemo.Areas.Identity.Pages.Account
 {
@@ -127,6 +128,8 @@ namespace testdemo.Areas.Identity.Pages.Account
 
                 user.PhoneNumber = Input.PhoneNumber; // Set the phone number   
 
+                //user.EmailConfirmed = true;
+
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
@@ -135,8 +138,14 @@ namespace testdemo.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
+
+
+                  await _userManager.AddToRoleAsync(user, clsRoles.roleUser); // Add user to the "User" role
+
+
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
                         "/Account/ConfirmEmail",

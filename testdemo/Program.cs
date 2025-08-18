@@ -3,7 +3,9 @@ using testdemo.Data;
 using testdemo.Repository;
 using testdemo.Repository.Base;
 using Microsoft.AspNetCore.Identity;
- 
+using Microsoft.AspNetCore.Identity.UI.Services;
+using testdemo.Models;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,7 +24,11 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // Identity’yi testdemoContext ile baðla
 builder.Services.AddDefaultIdentity<IdentityUser>(options =>
         options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>() // Rolleri ekle   
     .AddEntityFrameworkStores<testdemoContext>();
+
+
+builder.Services.AddTransient<IEmailSender ,  clsEmailConfirm>(); 
 
 
 builder.Services.AddTransient <IUintOfWork , UnitOfWork>();

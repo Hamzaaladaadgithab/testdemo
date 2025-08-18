@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http.Connections;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using testdemo.Models;
@@ -7,6 +8,9 @@ using testdemo.Repository.Base;
 
 namespace TestCoreApp.Controllers
 {
+
+    [Authorize(Roles = clsRoles.roleAdmin)]
+
     public class CategoryController : Controller
     {
         public CategoryController(IUintOfWork _myUnit )
